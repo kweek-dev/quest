@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Квест: Симуляция взлома</title>
+    <title>Квест: Стеганография</title>
     <style>
         html, body {
             height: 100%;
@@ -34,31 +34,26 @@
         h1 { font-size: 2.5em; text-shadow: 0 0 10px #0f0; }
         p { font-size: 1.2em; }
         .hint { color: #555; font-size: 0.9em; }
+        img { max-width: 300px; border-radius: 8px; }
+        a { color: #0f0; }
     </style>
     <script>
         function checkKey() {
             const key = new URLSearchParams(window.location.search).get('key');
-            if (key !== 'breach2025') {
+            if (key !== 'terminalhack2025') {
                 window.location.href = '/index.html';
             }
-        }
-        function hackDatabase() {
-            console.log("Инициализация взлома базы данных MegaCorp...");
-            setTimeout(() => {
-                console.log("Обход файрвола...");
-                setTimeout(() => {
-                    console.log("Доступ получен. Ключ: megacorp_secret");
-                }, 2000);
-            }, 1000);
         }
     </script>
 </head>
 <body onload="checkKey()">
     <div class="content-bg">
-        <h1>Шаг 4: Симуляция взлома</h1>
-        <p>Ты нашел доступ к базе данных MegaCorp. Используй функцию <code>hackDatabase()</code> в консоли.</p>
-        <p class="hint">Подсказка: Открой консоль (F12) и вызови hackDatabase().</p>
-        <p>Введи ключ в URL: /step4?key=твой_ключ</p>
+        <h1>Шаг 6: Стеганография</h1>
+        <p>Ты нашел секретный файл. Извлеки данные из изображения.</p>
+        <img src="/assets/secret.png" alt="Secret Image">
+        <p><a href="/assets/secret.png" download>Скачать изображение</a></p>
+        <p class="hint">Подсказка: Используй Steghide с паролем vigenerekey.</p>
+        <p>Введи ключ в URL: /final?key=твой_ключ</p>
     </div>
 </body>
 </html>

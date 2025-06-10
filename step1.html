@@ -2,30 +2,76 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Квест: Криптография</title>
+    <title>Квест: Декодирование сообщения</title>
     <style>
-        body {
-            background: #1a1a1a;
-            color: #0f0;
-            font-family: monospace;
-            text-align: center;
-            padding: 50px;
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
         }
-        .hint { color: #555; font-size: 12px; }
+        body {
+            min-height: 100vh;
+            min-width: 100vw;
+            height: 100%;
+            width: 100%;
+            background: #1a1a1a url('https://avatars.mds.yandex.net/get-vertis-journal/4469561/1.jpg_1695796935639/orig') no-repeat center center fixed;
+            background-size: cover;
+            color: #0f0;
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .content-bg {
+            background: rgba(20, 20, 20, 0.92);
+            border-radius: 16px;
+            padding: 40px 30px 30px 30px;
+            box-shadow: 0 0 30px #000a;
+            max-width: 500px;
+            width: 100%;
+        }
+        h1 { font-size: 2.5em; text-shadow: 0 0 10px #0f0; }
+        p { font-size: 1.2em; }
+        .hint { color: #555; font-size: 0.9em; }
+        input, button { background: #333; color: #0f0; padding: 5px; border: none; border-radius: 4px; }
+        input { width: 70%; }
+        button { cursor: pointer; }
     </style>
     <script>
         function checkKey() {
             const key = new URLSearchParams(window.location.search).get('key');
-            if (key !== 'cyberkey2025') {
+            if (key !== 'hal') {
                 window.location.href = '/index.html';
+            }
+        }
+        function decodeMessage() {
+            const input = document.getElementById('ciphertext').value.toUpperCase();
+            let result = '';
+            for (let i = 0; i < input.length; i++) {
+                if (input[i].match(/[A-Z]/)) {
+                    result += String.fromCharCode((input.charCodeAt(i) - 65 + 3) % 26 + 65);
+                } else {
+                    result += input[i];
+                }
+            }
+            if (result === 'CAESAR') {
+                document.getElementById('result').innerText = 'Успех! Ключ: caesar. Перейди на /step2?key=caesar';
+            } else {
+                document.getElementById('result').innerText = 'Неверная расшифровка!';
             }
         }
     </script>
 </head>
 <body onload="checkKey()">
-    <h1>Шаг 2: Расшифруй сообщение</h1>
-    <p>Ты нашел первый ключ! Теперь расшифруй это сообщение: <strong>wkhnhbvfulsw</strong></p>
-    <p class="hint">Подсказка: Это шифр Цезаря со сдвигом 3. Следующий ключ — расшифрованное сообщение.</p>
-    <p>Введи ключ в URL: /step2?key=твой_ключ</p>
+    <div class="content-bg">
+        <h1>Шаг 2: Декодирование сообщения</h1>
+        <p>Ты перехватил сообщение: <strong>ZXBPXO</strong>.</p>
+        <p>Посети страницу Википедии о шифре Цезаря, найди пример и используй указанный там сдвиг для расшифровки.</p>
+        <p class="hint">Подсказка: Ищи пример с текстом "THE QUICK BROWN FOX".</p>
+        <input id="ciphertext" placeholder="Введите зашифрованное сообщение">
+        <button onclick="decodeMessage()">Расшифровать</button>
+        <p id="result"></p>
+    </div>
 </body>
 </html>

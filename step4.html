@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Квест: Командная строка</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            min-height: 100vh;
+            min-width: 100vw;
+            height: 100%;
+            width: 100%;
+            background: #1a1a1a url('https://avatars.mds.yandex.net/get-vertis-journal/4469561/1.jpg_1695796935639/orig') no-repeat center center fixed;
+            background-size: cover;
+            color: #0f0;
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .content-bg {
+            background: rgba(20, 20, 20, 0.92);
+            border-radius: 16px;
+            padding: 40px 30px 30px 30px;
+            box-shadow: 0 0 30px #000a;
+            max-width: 700px;
+            width: 100%;
+        }
+        h1 { font-size: 2.5em; text-shadow: 0 0 10px #0f0; }
+        p { font-size: 1.2em; }
+        .hint { color: #555; font-size: 0.9em; }
+        #terminal { background: #000; color: #0f0; width: 100%; height: 300px; margin: auto; padding: 10px; border-radius: 8px; }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xterm/4.19.0/xterm.min.js"></script>
+    <script>
+        function checkKey() {
+            const key = new URLSearchParams(window.location.search).get('key');
+            if (key !== 'megacorp_secret') {
+                window.location.href = '/index.html';
+            }
+        }
+        window.onload = function() {
+            checkKey();
+            const term = new Terminal();
+            term.open(document.getElementById('terminal'));
+            term.write('resistance@megacorp:~$ ');
+            let currentDir = '/home';
+            let command = '';
+            term.onData(data => {
+                if (data === '\r') {
+                    if (command === 'ls' && currentDir === '/home') {
+                        term.write('\r\nsecret\r\n');
+                    } else if (command === 'cd secret' && currentDir === '/home') {
+                        currentDir = '/home/secret';
+                        term.write('\r\n');
+                    } else if (command === 'ls' && currentDir === '/home/secret') {
+                        term.write('\r\nkey.txt\r\n');
+                    } else if (command === 'cat key.txt' && currentDir === '/home/secret') {
+                        term.write('\r\nКлюч: terminalhack2025. Перейди на /step5?key=terminalhack2025\r\n');
+                    } else {
+                        term.write('\r\nКоманда не найдена\r\n');
+                    }
+                    term.write('resistance@megacorp:~$ ');
+                    command = '';
+                } else if (data === '\b') {
+                    if (command.length > 0) {
+                        command = command.slice(0, -1);
+                        term.write('\b \b');
+                    }
+                } else {
+                    command += data;
+                    term.write(data);
+                }
+            });
+        };
+    </script>
+</head>
+<body>
+    <div class="content-bg">
+        <h1>Шаг 5: Командная строка</h1>
+        <p>Ты внутри сервера MegaCorp. Используй терминал, чтобы найти ключ.</p>
+        <p class="hint">Подсказка: Используй команды ls, cd, cat.</p>
+        <div id="terminal"></div>
+    </div>
+</body>
+</html>

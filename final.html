@@ -4,27 +4,50 @@
     <meta charset="UTF-8">
     <title>Квест: Победа!</title>
     <style>
-        body {
-            background: #1a1a1a;
-            color: #0f0;
-            font-family: monospace;
-            text-align: center;
-            padding: 50px;
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
         }
-        h1 { font-size: 2em; }
+        body {
+            min-height: 100vh;
+            min-width: 100vw;
+            height: 100%;
+            width: 100%;
+            background: #1a1a1a url('https://avatars.mds.yandex.net/get-vertis-journal/4469561/1.jpg_1695796935639/orig') no-repeat center center fixed;
+            background-size: cover;
+            color: #0f0;
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .content-bg {
+            background: rgba(20, 20, 20, 0.92);
+            border-radius: 16px;
+            padding: 40px 30px 30px 30px;
+            box-shadow: 0 0 30px #000a;
+            max-width: 500px;
+            width: 100%;
+        }
+        h1 { font-size: 2.5em; text-shadow: 0 0 10px #0f0; }
+        p { font-size: 1.2em; }
     </style>
     <script>
         function checkKey() {
             const key = new URLSearchParams(window.location.search).get('key');
-            if (key !== 'HackerSecretKey2025') {
+            if (key !== 'expose_megacorp') {
                 window.location.href = '/index.html';
             }
         }
     </script>
 </head>
 <body onload="checkKey()">
-    <h1>Поздравляем, Агент!</h1>
-    <p>Ты взломал систему хакера и раскрыл его секрет!</p>
-    <p>Финальный ключ: HackerSecretKey2025</p>
+    <div class="content-bg">
+        <h1>Победа! MegaCorp повержена!</h1>
+        <p>Ты раскрыл секреты корпорации и спас Нео-Токио!</p>
+        <p>Финальный ключ: expose_megacorp</p>
+    </div>
 </body>
 </html>

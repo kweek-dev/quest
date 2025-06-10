@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Квест: Победа!</title>
+    <style>
+        body {
+            background: #1a1a1a;
+            color: #0f0;
+            font-family: monospace;
+            text-align: center;
+            padding: 50px;
+        }
+        h1 { font-size: 2em; }
+    </style>
+    <script>
+        function checkKey() {
+            const key = new URLSearchParams(window.location.search).get('key');
+            if (key !== 'HackerSecretKey2025') {
+                window.location.href = '/index.html';
+            }
+        }
+    </script>
+</head>
+<body onload="checkKey()">
+    <h1>Поздравляем, Агент!</h1>
+    <p>Ты взломал систему хакера и раскрыл его секрет!</p>
+    <p>Финальный ключ: HackerSecretKey2025</p>
+</body>
+</html>

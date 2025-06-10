@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Квест: SQL-инъекция</title>
+    <style>
+        body {
+            background: #1a1a1a;
+            color: #0f0;
+            font-family: monospace;
+            text-align: center;
+            padding: 50px;
+        }
+        .hint { color: #555; font-size: 12px; }
+        input { background: #333; color: #0f0; padding: 5px; }
+        button { background: #0f0; color: #000; padding: 5px 10px; }
+    </style>
+    <script>
+        function checkKey() {
+            const key = new URLSearchParams(window.location.search).get('key');
+            if (key !== 'thekeyscript') {
+                window.location.href = '/index.html';
+            }
+        }
+
+        function checkLogin() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            // Фейковая проверка, уязвимая к SQL-инъекции
+            if (username.includes("' OR '1'='1") || (username === 'admin' && password === 'admin123')) {
+                document.getElementById('result').innerText = 'Успех! Ключ: sqlbypass2025. Перейди на /step3?key=sqlbypass2025';
+            } else {
+                document.getElementById('result').innerText = 'Неверный логин или пароль!';
+            }
+        }
+    </script>
+</head>
+<body onload="checkKey()">
+    <h1>Шаг 3: Войди в систему</h1>
+    <p>Попробуй войти в систему хакера.</p>
+    <p class="hint">Подсказка: Эта форма уязвима к SQL-инъекции. Попробуй что-то вроде ' OR '1'='1 в поле логина.</p>
+    <input type="text" id="username" placeholder="Логин"><br><br>
+    <input type="password" id="password" placeholder="Пароль"><br><br>
+    <button onclick="checkLogin()">Войти</button>
+    <p id="result"></p>
+</body>
+</html>
